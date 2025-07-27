@@ -72,11 +72,69 @@ Criar um sistema de controle de acesso a um clube. Sócios podem acessar áreas 
 
 \- xUnit (testes automatizados)
 
+\- Swagger/OpenAPI (para documentação da API)
+
 
 
 ---
 
+## 🏛 Padrões de Design e Arquitetura Implementados
 
+O projeto foi desenvolvido adotando os seguintes padrões de design e princípios de arquitetura de software:
+
+### Repository Pattern
+- Implementado para abstrair a camada de acesso a dados
+- Isola a lógica de acesso a dados do resto da aplicação
+- Facilita a substituição do mecanismo de persistência
+  
+### Unit of Work
+- Padrão implementado para gerenciar transações e o contexto do EF Core
+- Garante que todas as operações em múltiplos repositórios sejam atomicas
+  
+### Domain-Driven Design (DDD)
+- Separação clara entre:
+    Camada de Domínio: Contém as entidades, value objects e regras de negócio
+
+    Camada de Aplicação: Orquestra os casos de uso
+
+    Camada de Infraestrutura: Implementação concreta de repositórios e acesso a dados
+
+- Entidades ricas com comportamento (não apenas propriedades)
+- Agregações claramente definidas (ex: Socio como raiz de agregação)
+  
+### Inversão de Dependência (DIP)
+- Implementado através de interfaces para todos os serviços e repositórios
+- Injeção de dependência via construtor em todas as classes
+- Configuração no container DI no Program.cs:
+  
+### Clean Architecture
+- Organização do projeto seguindo os princípios de Clean Architecture:
+  
+    Core (Domain): Entidades, interfaces, regras de negócio
+  
+    Application: Casos de uso, serviços, DTOs
+  
+    Infrastructure: Implementações concretas (EF Core, repositórios)
+  
+    Presentation: Controllers, API endpoints
+
+### CQRS (Simplificado)
+- Separação entre operações de:
+
+     Consulta: Operações de leitura (ex: obter histórico de acessos)
+  
+     Comando: Operações de escrita (ex: registrar tentativa de acesso)
+- Implementado através de serviços distintos para operações complexas
+
+### SOLID (Simplificado)
+- Single Responsibility: Cada classe tem uma única responsabilidade
+- Open/Closed: Aberto para extensão, fechado para modificação
+- Liskov Substitution: Interfaces podem ser substituídas por implementações
+- Interface Segregation: Múltiplas interfaces específicas
+- Dependency Inversion: Depender de abstrações, não de implementações
+
+  
+---
 
 \## Como executar
 
